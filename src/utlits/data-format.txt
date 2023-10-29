@@ -1,0 +1,9 @@
+
+// loan type + loan data 
+
+{           
+        "type":[{"1":"4 months"},{"2":" 6 months "}],
+        "loanstatus":["running","settle"]
+}
+
+
