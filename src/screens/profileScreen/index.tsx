@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react'
-import { View, Text, StyleSheet, Image,Dimensions,PixelRatio ,TouchableOpacity} from 'react-native'   
+import React, { useEffect, useState , useRef} from 'react'
+import { View, Text, StyleSheet, Image,Dimensions,PixelRatio ,TouchableOpacity,Animated} from 'react-native'   
 import { ScrollView } from 'react-native-gesture-handler'
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useNavigation } from '@react-navigation/native';
- 
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
  
 
 // icons 
@@ -26,16 +26,25 @@ import { fontWeights } from '../../styles/fontWeight';
 
 interface Header{
   screenname:string, 
-  navigation:any
+  navigation:any, 
 } 
+
+interface Userimagonmenu{
+  animHeaderValue:any
+}
+
+import DATA from '../../utlits/data';
 
 // Main Screen
 const ProfileScreen = ()=>{
   const navigation = useNavigation(); 
   
   const [minimenu,setMiniMenu] = useState<boolean>(false);
+  
 
-    // screen menu  
+  let scrollOffsetY = useRef(new Animated.Value(0)).current;  
+    
+  //start: screen menu
   const HeaderTab = ({screenname, navigation}:Header)=>{   
     return (  
         <View style={styles.Header}>
@@ -49,25 +58,88 @@ const ProfileScreen = ()=>{
         </View>   
     )
   }
-
+  //end: screen menu
+  const HEADER_HEIGHT = 90;
+  // start: userimagonmenu
+  const Userimagonmenu = ({animHeaderValue}:Userimagonmenu)=>{
+    
+    const insets = useSafeAreaInsets(); 
+    // header Height -- top menu 
+    const headerHeightTop = animHeaderValue.interpolate({
+      inputRange: [0, HEADER_HEIGHT + insets.top],
+      outputRange: [(HEADER_HEIGHT + insets.top)*2, insets.top],
+      extrapolate: 'clamp'
+    });
+    // header Height -- bottom menu / main menu 
+    const headerHeight = animHeaderValue.interpolate({
+      inputRange: [0, HEADER_HEIGHT + insets.top],
+      outputRange: [HEADER_HEIGHT + insets.top, insets.top + 66],
+      extrapolate: 'clamp'
+    });
+    const animateHeaderBackgroundColor = animHeaderValue.interpolate({
+      inputRange: [0, HEADER_HEIGHT - HEADER_HEIGHT],
+      outputRange: ['#fff', '#fff'],
+      extrapolate: 'clamp'
+    });
+   
     return (
-      <GestureHandlerRootView style={styles.HomeContainer}>
-          <HeaderTab screenname="Manas Singh" navigation={navigation}/> 
-          {minimenu&&
-            <View style={[styles.minimenu,{}]}> 
-              <TouchableOpacity style={[styles.minimenuTab]}><Text style={styles.minimenuText}>Setting</Text></TouchableOpacity> 
-              <TouchableOpacity style={[styles.minimenuTab]}><Text style={styles.minimenuText}>Setting</Text></TouchableOpacity> 
-              <TouchableOpacity style={[styles.minimenuTab]}><Text style={styles.minimenuText}>Contact Us</Text></TouchableOpacity>
-              <TouchableOpacity style={[styles.minimenuTab,{marginBottom:0}]}><Text style={styles.minimenuText}>Sign Out</Text></TouchableOpacity>
-            </View> 
-          }   
-          <ScrollView style={styles.scrollView} scrollEnabled={true} showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false}>
-            <View style={[styles.userimageonmenu]}>
-
-            </View>
-          </ScrollView>
-      </GestureHandlerRootView>  
+      <Animated.View
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          zIndex: 10,
+          height: headerHeight,
+          // backgroundColor: animateHeaderBackgroundColor
+        }}
+      >
+       <Animated.View style={[styles.UserEditProfile,{width:'100%',height:headerHeightTop,backgroundColor:animateHeaderBackgroundColor}]}>
+            <Image source={require('../../../assets/')}/>
+       </Animated.View>
+       <Animated.View style={{width:'100%',height:headerHeight,backgroundColor:'yellow'}}>
+        
+       </Animated.View>
+      </Animated.View>
     )
+  }
+  // end: userimagonmenu
+
+  return (
+    <GestureHandlerRootView style={styles.HomeContainer}>
+        <HeaderTab screenname="Manas Singh" navigation={navigation}/> 
+        {minimenu&&
+          <View style={[styles.minimenu,{}]}> 
+            <TouchableOpacity style={[styles.minimenuTab]}><Text style={styles.minimenuText}>Setting</Text></TouchableOpacity> 
+            <TouchableOpacity style={[styles.minimenuTab]}><Text style={styles.minimenuText}>Setting</Text></TouchableOpacity> 
+            <TouchableOpacity style={[styles.minimenuTab]}><Text style={styles.minimenuText}>Contact Us</Text></TouchableOpacity>
+            <TouchableOpacity style={[styles.minimenuTab,{marginBottom:0}]}><Text style={styles.minimenuText}>Sign Out</Text></TouchableOpacity>
+          </View> 
+        }   
+        <View style={{backgroundColor:'red'}}> 
+            <Userimagonmenu animHeaderValue={scrollOffsetY}/>
+            {/* <ScrollView style={styles.scrollView}   scrollEventThrottle={16} scrollEnabled={true} showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false}>
+              <View style={[styles.userimageonmenu]}>
+
+              </View>
+            </ScrollView> */} 
+            <ScrollView
+              scrollEventThrottle={16}
+              onScroll={Animated.event(
+                [{ nativeEvent: { contentOffset: { y: scrollOffsetY}}}],
+                {useNativeDriver: false}
+              )}
+              style={{paddingTop:HEADER_HEIGHT*2}}
+            >         
+                  {DATA.map((book, index) => {
+                    return (                
+                        <Text style={styles.scrollText} key={book.id}>{book.title}</Text>                
+                    )
+                  })}       
+            </ScrollView>
+        </View>
+    </GestureHandlerRootView>  
+  )
 }
 
 const styles = StyleSheet.create({
@@ -133,8 +205,16 @@ const styles = StyleSheet.create({
     fontSize:fontSizes.sm,
     fontWeight:"400", 
   },
-  userimageonmenu:{
-
+  userimageonmenu:{ 
+  },
+  scrollText: {            
+    fontSize: 19,
+    textAlign: 'center',
+    padding: 20,
+    color: '#000'
+  },
+  UserEditProfile:{
+     
   }
 });
   

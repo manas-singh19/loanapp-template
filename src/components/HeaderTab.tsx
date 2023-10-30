@@ -23,7 +23,7 @@ const getFontSize = (size:number) => size / fontScale; // for fonts
 const HeaderTab = ({screenname, navigation}:Header)=>{  
 
     const [minimenu,setMiniMenu] = useState<boolean>(true);
-
+    
     return ( 
         <>
             <View style={styles.Header}>
