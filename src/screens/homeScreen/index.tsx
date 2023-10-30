@@ -40,9 +40,9 @@ const HomeScreen = ()=>{
                  <View style={[styles.HomeContant,{paddingTop:22}]}>
                     
                     <View style={{marginBottom:20}}>
-                        <LoanCard loanamount={3122} loantype="business loan" loantenure={12} background="#dae0ef" btnlable="apply now" loanid={12} />
+                        <LoanCard loanamount={2000} loantype="business loan" loantenure={12} background="#dae0ef" btnlable="apply now" loanid={12} />
                         <LoanCard loanamount={2500} loantype="flexi personal loan" loantenure={12} background="#f2d6f5" btnlable="Get now" loanid={13} />
-                        <LoanCard loanamount={3122} loantype="business loan" loantenure={12} background="#dae0ef" btnlable="apply now" loanid={14} />
+                        <LoanCard loanamount={3000} loantype="business loan" loantenure={12} background="#dae0ef" btnlable="apply now" loanid={14} />
                     </View>
 
                     <View style={[styles.BoxContainer]}>

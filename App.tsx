@@ -21,7 +21,7 @@ import ProfileScreen from './src/screens/profileScreen';
 
 import HomeScreen from './src/screens/homeScreen';
 import NotificationScreen from './src/screens/notification'; 
-import OfferScreen from './src/screens/offerScreen';
+import OfferScreen from './src/screens/currentOffersScreen';
 
 // icon 
 import Icon from 'react-native-vector-icons/AntDesign';

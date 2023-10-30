@@ -13,7 +13,7 @@ const fontScale = PixelRatio.getFontScale();
 const getFontSize = (size:number) => size / fontScale; // for fonts 
 
 
-const Button = ({width,height,label,loanid}:Button)=>{  
+const CircleButton = ({width,height,label,loanid}:Button)=>{  
     return (
         <View onTouchStart={()=>alert(loanid)} style={[styles.button,{width:width,height:height}]}>
             <Text style={styles.buttonText}>{label}</Text>
@@ -38,4 +38,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default Button;
+export default CircleButton;

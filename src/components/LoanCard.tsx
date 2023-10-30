@@ -6,7 +6,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import Rupee from 'react-native-vector-icons/FontAwesome';
 
 // componts 
-import Button from './Button';
+import CircleButton from './ButtonCircle';
 
 interface LoanCard{
     loanamount:number,
@@ -29,6 +29,19 @@ const height = 120;
 const fontScale = PixelRatio.getFontScale();
 const getFontSize = (size:number) => size / fontScale; // for fonts 
 
+function addCommas(nStr:any)
+{
+    nStr += '';
+    let x = nStr.split('.');
+    let x1 = x[0];
+    let x2 = x.length > 1 ? '.' + x[1] : '';
+    let rgx = /(\d+)(\d{3})/;
+    while (rgx.test(x1)) {
+        x1 = x1.replace(rgx, '$1' + ',' + '$2');
+    }
+    return x1 + x2;
+}
+
 const LoanCard = ({loanamount, loantype, loantenure, background, btnlable, loanid}:LoanCard)=>{
     
     return(
@@ -41,12 +54,12 @@ const LoanCard = ({loanamount, loantype, loantenure, background, btnlable, loani
                         </View>
                         <View>
                             <Text style={styles.upto}>Up to</Text>
-                            <Text style={styles.loanamount}><Rupee name='rupee' size={fontSizes.md} /> {loanamount}</Text>
+                            <Text style={styles.loanamount}><Rupee name='rupee' size={fontSizes.md} /> {addCommas(loanamount)}</Text>
                         </View> 
                     </View> 
                 </View>
                 <View style={[styles.cardHalf]}>
-                    <Button width={((width - 40) / 2)-24} height={(height - (height / 3)) / 2 } label={btnlable} loanid={loanid} />
+                    <CircleButton width={((width - 40) / 2)-24} height={(height - (height / 3)) / 2 } label={btnlable} loanid={loanid} />
                 </View>
             </View>
             <View style={styles.textlink}>

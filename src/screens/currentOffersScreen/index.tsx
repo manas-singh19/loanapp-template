@@ -12,6 +12,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 
 // componets 
 import HeaderBack from '../../components/HeaderBack';
+import SquareButton from '../../components/ButtonSquare';
 
 // Dimenstions 
 const width = Dimensions.get('window').width;
@@ -55,7 +56,7 @@ const OfferScreen = ()=>{
     }, [navigation]);
     return(
         <GestureHandlerRootView style={styles.Container}>
-            <HeaderBack screenname="Running Offers" navigation={navigation} backscreen="homescreen"/>
+            <HeaderBack screenname="Current Offers" navigation={navigation} backscreen="homescreen"/>
             <ScrollView style={styles.OffersContaier} scrollEnabled={true} showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false}>
                 <View style={styles.content}>
                     <Text style={styles.ContentTitle}>
@@ -68,10 +69,14 @@ const OfferScreen = ()=>{
                 <View style={{height:220}}>
                     <Image source={require('../../../assets/verticle.png')} style={{width:'100%',height:'100%',}}/> 
                 </View> 
-                <View style={[styles.content,{marginBottom:64}]}> 
+                <View style={[styles.content,{}]}> 
                     <Text style={styles.ContentPagra}>
                         Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
                     </Text>
+                </View>
+                <View style={{flexDirection:'row',justifyContent:'space-between',padding:paddings.md,paddingTop:0,marginBottom:8}}>
+                    <SquareButton width="49%" height={(height - (height / 3)) / 8 } type="outline" label="Cancle" loanid="002" />
+                    <SquareButton width="49%" height={(height - (height / 3)) / 8 } type="fill" label="Apply Now" loanid="001" /> 
                 </View>
             </ScrollView>
         </GestureHandlerRootView>
