@@ -1,5 +1,5 @@
 import React, { useEffect, useState , useRef} from 'react'
-import { View, Text, StyleSheet, Image,Dimensions,PixelRatio ,TouchableOpacity,Animated} from 'react-native'   
+import { View, Text, StyleSheet, Image,Dimensions,PixelRatio ,TouchableOpacity,Animated, ImageBackground} from 'react-native'   
 import { ScrollView } from 'react-native-gesture-handler'
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useNavigation } from '@react-navigation/native';
@@ -8,6 +8,10 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 // icons 
 import Icon from 'react-native-vector-icons/Entypo'; 
+import IconProfile from 'react-native-vector-icons/AntDesign'; 
+import IconLoan from 'react-native-vector-icons/MaterialCommunityIcons'; 
+import IconFeatures from 'react-native-vector-icons/Feather'; 
+ 
 
 // Dimenstions 
 const width = Dimensions.get('window').width;
@@ -64,24 +68,29 @@ const ProfileScreen = ()=>{
   const Userimagonmenu = ({animHeaderValue}:Userimagonmenu)=>{
     
     const insets = useSafeAreaInsets(); 
+
     // header Height -- top menu 
     const headerHeightTop = animHeaderValue.interpolate({
       inputRange: [0, HEADER_HEIGHT + insets.top],
-      outputRange: [(HEADER_HEIGHT + insets.top)*2, insets.top],
+      outputRange: [(HEADER_HEIGHT + insets.top)+60, insets.top],
       extrapolate: 'clamp'
     });
+   
     // header Height -- bottom menu / main menu 
     const headerHeight = animHeaderValue.interpolate({
       inputRange: [0, HEADER_HEIGHT + insets.top],
-      outputRange: [HEADER_HEIGHT + insets.top, insets.top + 66],
+      outputRange: [(HEADER_HEIGHT + insets.top)-18, insets.top + 66], 
       extrapolate: 'clamp'
     });
+
+    // background Color -- chnage the color 
     const animateHeaderBackgroundColor = animHeaderValue.interpolate({
       inputRange: [0, HEADER_HEIGHT - HEADER_HEIGHT],
       outputRange: ['#fff', '#fff'],
       extrapolate: 'clamp'
     });
-   
+ 
+    
     return (
       <Animated.View
         style={{
@@ -94,11 +103,30 @@ const ProfileScreen = ()=>{
           // backgroundColor: animateHeaderBackgroundColor
         }}
       >
-       <Animated.View style={[styles.UserEditProfile,{width:'100%',height:headerHeightTop,backgroundColor:animateHeaderBackgroundColor}]}>
-            <Image source={require('../../../assets/')}/>
+       <Animated.View style={[styles.UserEditProfile,{width:'100%',height:headerHeightTop,backgroundColor:animateHeaderBackgroundColor}]}> 
+            <Image style={{borderRadius:12, width:'16%', height:'45%',marginBottom:8}} source={require('../../../assets/userprofile.png')}/>
+            <Text style={styles.UserEditProfileName}>Manas Singh</Text> 
+            <Text style={styles.UserEditProfileEmail}>Singhmanas998@gmail.com</Text> 
        </Animated.View>
-       <Animated.View style={{width:'100%',height:headerHeight,backgroundColor:'yellow'}}>
-        
+       <Animated.View style={{width:'100%', height:headerHeight, flexDirection:'row', backgroundColor:'#fff', shadowColor: '#212121', shadowOffset: [0,1], shadowOpacity: 0.1, shadowRadius:1}}>  
+       
+       
+          <View style={[styles.iconBox]}> 
+              <IconProfile name='profile' size={getFontSize(26)} color="#000"/>
+          </View>
+
+          <View style={[styles.iconBox]}>
+              <IconLoan name='currency-ils' size={getFontSize(26)} color="#000"/>
+          </View> 
+
+          <View style={[styles.iconBox]}>
+              <IconFeatures name='trending-up' size={getFontSize(26)} color="#000"/>
+          </View>  
+
+          <View style={[styles.iconBox]}>
+              <IconFeatures name='settings' size={getFontSize(26)} color="#000"/>
+          </View>
+
        </Animated.View>
       </Animated.View>
     )
@@ -116,7 +144,7 @@ const ProfileScreen = ()=>{
             <TouchableOpacity style={[styles.minimenuTab,{marginBottom:0}]}><Text style={styles.minimenuText}>Sign Out</Text></TouchableOpacity>
           </View> 
         }   
-        <View style={{backgroundColor:'red'}}> 
+        <View style={{backgroundColor:'#fff'}}> 
             <Userimagonmenu animHeaderValue={scrollOffsetY}/>
             {/* <ScrollView style={styles.scrollView}   scrollEventThrottle={16} scrollEnabled={true} showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false}>
               <View style={[styles.userimageonmenu]}>
@@ -129,7 +157,7 @@ const ProfileScreen = ()=>{
                 [{ nativeEvent: { contentOffset: { y: scrollOffsetY}}}],
                 {useNativeDriver: false}
               )}
-              style={{paddingTop:HEADER_HEIGHT*2}}
+              style={{paddingTop:(HEADER_HEIGHT*2)+40,backgroundColor:'#f0f0f0'}}
             >         
                   {DATA.map((book, index) => {
                     return (                
@@ -214,7 +242,27 @@ const styles = StyleSheet.create({
     color: '#000'
   },
   UserEditProfile:{
-     
+     justifyContent:'center',
+     alignContent:'center',
+     alignItems:'center'
+  }, 
+  UserEditProfileName:{
+    fontSize:getFontSize(18),
+    fontWeight:'600',
+    marginBottom:4
+  },
+  UserEditProfileEmail:{
+    fontSize:getFontSize(14),
+    fontWeight:'500',
+    marginBottom:4
+  },
+  iconBox:{
+    width:'25%',
+    height:'100%',
+    justifyContent:'center',
+    alignContent:'center',
+    alignItems:'center', 
+    backgroundColor:'#fff' 
   }
 });
   
