@@ -1,10 +1,13 @@
 import React, { useEffect, useState , useRef} from 'react'
 import { View, Text, StyleSheet, Image,Dimensions,PixelRatio ,TouchableOpacity,Animated, ImageBackground} from 'react-native'   
-import { ScrollView } from 'react-native-gesture-handler'
+import { ScrollView, TextInput } from 'react-native-gesture-handler'
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useNavigation } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
- 
+
+// compoents 
+import SquareButton from '../../components/ButtonSquare';
+import LoanCard from '../../components/LoanCard';
 
 // icons 
 import Icon from 'react-native-vector-icons/Entypo'; 
@@ -111,6 +114,7 @@ const ProfileScreen = ()=>{
   } 
   //end: main states for section 
 
+
   const HEADER_HEIGHT = 90;
   // start: userimagonmenu
   const Userimagonmenu = ({animHeaderValue}:Userimagonmenu)=>{
@@ -193,6 +197,31 @@ const ProfileScreen = ()=>{
   }
   // end: userimagonmenu
 
+  // start: Profile 
+  const [profile,setProfile] = useState({
+    fullname:'Manas Singh',
+    email:'singhmanas998@gmail.com',
+    phone:'7888388017',
+    address:'Kapurthala, Punjab',
+    city:'Kapurthala',
+    zipcode:'144620'
+  })
+  // input handler 
+  const ProfileHandler = (statename:any,e:any) => {   
+    console.log({statename,value:e.nativeEvent.text})
+    setProfile((prevState) => ({
+      ...prevState,
+      [statename]: e.nativeEvent.text,
+    }));
+  };
+  // submpt form 
+  const SaveProfile = ()=>{
+    
+  }
+  // end: Profile 
+
+
+
   return (
     <GestureHandlerRootView style={styles.HomeContainer}>
         <HeaderTab screenname="Manas Singh" navigation={navigation}/> 
@@ -225,34 +254,64 @@ const ProfileScreen = ()=>{
                     )
                   })}        */}
                   {detial.one&&( 
-                    <View style={{width:'100%',minHeight:500,backgroundColor:'red',padding:paddings.md,flexDirection:'column'}}>
-                        <View>
-                            
+                    <View style={{width:'100%',minHeight:500,padding:paddings.md,flexDirection:'column',backgroundColor:'#f0f0f0'}}>
+                        <View style={[styles.profileDetails,{backgroundColor:'#f0f0f0'}]}>
+                            <Text style={[styles.headerText]}>Edit Profile</Text>
+                            <View style={{flexDirection:'column',marginBottom:12}}>
+                              <TextInput style={[styles.inputText]} defaultValue={profile.fullname}  onChange={data=>ProfileHandler("fullname",data)}  placeholderTextColor='#141414' placeholder="Fullname"/> 
+                            </View>
+                            <View style={{flexDirection:'column',marginBottom:12}}>
+                              <TextInput style={[styles.inputText]} defaultValue={profile.email}  onChange={data=>ProfileHandler("email",data)}  placeholderTextColor='#141414'  placeholder="Email"/>
+                            </View>
+                            <View style={{flexDirection:'column',marginBottom:12}}>
+                              <TextInput style={[styles.inputText]} defaultValue={profile.phone} onChange={data=>ProfileHandler("phone",data)}  placeholderTextColor='#141414' placeholder='Phone number'/>
+                            </View> 
+                            <View style={{flexDirection:'column',marginBottom:12}}>
+                              <TextInput style={[styles.inputText]} defaultValue={profile.address}  onChange={data=>ProfileHandler("address",data)}   placeholderTextColor='#141414'  placeholder="Address"/>
+                            </View> 
+                            <View style={{flexDirection:'row',justifyContent:'space-between',marginBottom:12}}>
+                              <TextInput style={[styles.inputText,{width:'47.5%'}]} defaultValue={profile.city}  onChange={data=>ProfileHandler("city",data)}  placeholderTextColor='#141414' placeholder='City'/>  
+                              <TextInput style={[styles.inputText,{width:'47.5%'}]} defaultValue={profile.zipcode}  onChange={data=>ProfileHandler("zipcode",data)} placeholderTextColor='#141414' placeholder='Zip Code'  /> 
+                            </View>
+                            <View style={{flexDirection:'column',justifyContent:'flex-end',alignContent:"flex-end",alignItems:'flex-end',marginBottom:12}}>
+                              <SquareButton width="49%" height={(height - (height / 3)) / 8 } type="fill" label="Save" loanid="000" />
+                            </View>
                         </View>
                     </View>
                   )}
                   {detial.two&&( 
-                    <View style={{width:'100%',minHeight:500,backgroundColor:'pink',padding:paddings.md,flexDirection:'column'}}>
-                      <View>
-                        
+                    <View style={{width:'100%',minHeight:500,backgroundColor:'#f0f0f0',padding:paddings.md,flexDirection:'column'}}>
+                      <View style={[styles.profileDetails,{backgroundColor:'#f0f0f0',padding:0}]}>
+                         <Text style={[styles.headerText]}>Istant Loan</Text>
+
+                         <LoanCard loanamount={2000} loantype="business loan" loantenure={12} background="#dae0ef" btnlable="apply now" loanid={12} /> 
+                         <LoanCard loanamount={2000} loantype="business loan" loantenure={12} background="#dae0ef" btnlable="apply now" loanid={12} /> 
+                         <LoanCard loanamount={2000} loantype="business loan" loantenure={12} background="#dae0ef" btnlable="apply now" loanid={12} /> 
+                         <LoanCard loanamount={2000} loantype="business loan" loantenure={12} background="#dae0ef" btnlable="apply now" loanid={12} /> 
+                         <LoanCard loanamount={2000} loantype="business loan" loantenure={12} background="#dae0ef" btnlable="apply now" loanid={12} /> 
+                         
                       </View>
                     </View>
                   )}
                   {detial.three&&(
-                    <View style={{width:'100%',minHeight:500,backgroundColor:'orange',padding:paddings.md,flexDirection:'column'}}>
-                        <View>
-                          
+                    <View style={{width:'100%',minHeight:300,backgroundColor:'#f0f0f0',padding:paddings.md,flexDirection:'column'}}>
+                        <View style={[styles.profileDetails,{backgroundColor:'#f0f0f0',padding:0}]}>
+                          <Text style={[styles.headerText]}>Current Loan</Text>
+                          <Text style={{ }}>No Current loan running, 
+                             <Text onPress={()=>miniMenuHandler('two',true)}>Browse Loan</Text>
+                          </Text>
                         </View>
                     </View> 
                    )}
                    {detial.four&&( 
-                    <View style={{width:'100%',minHeight:500,backgroundColor:'yellow',padding:paddings.md,flexDirection:'column'}}>
-                      <View>
-                        
-                      </View>
-                    </View>
+                    <View style={{width:'100%',minHeight:500,backgroundColor:'#f0f0f0',padding:paddings.md,flexDirection:'column'}}>
+                        <View style={[styles.profileDetails,{backgroundColor:'#f0f0f0',padding:0}]}>
+                          <Text style={[styles.headerText]}>Change Setting</Text>
+                          
+                        </View>
+                    </View> 
                    )}
-                  <View style={{width:'100%',height:300}}></View>
+                  <View style={{width:'100%',height:500,backgroundColor:'#f0f0f0'}}></View>
             </ScrollView>
         </View>
     </GestureHandlerRootView>  
@@ -352,6 +411,24 @@ const styles = StyleSheet.create({
     alignContent:'center',
     alignItems:'center', 
     backgroundColor:'#fff' 
+  },
+  profileDetails:{
+    width:'100%', 
+    minHeight:30, 
+  },
+  headerText:{
+    fontSize:getFontSize(fontSizes.md),
+    fontWeight:'600',
+    color:'#000',
+    marginBottom:12,
+  },
+  inputText:{ 
+    padding:paddings.md,
+    fontSize:fontSizes.md,
+    borderWidth:2,
+    borderColor:'#141414',
+    borderRadius:6, 
+    marginBottom:6
   }
 });
   

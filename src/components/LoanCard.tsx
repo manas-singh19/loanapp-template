@@ -73,7 +73,7 @@ const LoanCard = ({loanamount, loantype, loantenure, background, btnlable, loani
  
 const styles = StyleSheet.create({
     cardView:{
-        width:width-20,
+        width:'100%',
         height:height,
         backgroundColor:'#fff',
         borderRadius:6,

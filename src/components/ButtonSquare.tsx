@@ -18,7 +18,7 @@ const getFontSize = (size:number) => size / fontScale; // for fonts
 const SquareButton = ({width,height,label,loanid,type}:Button)=>{  
     
     return (
-        <View onTouchStart={()=>alert(loanid)} style={[styles.button,{width:width,height:height,marginBottom:12},type == "fill"?styles.btnfill:styles.btnoutline]}>
+        <View onTouchStart={()=>alert("click")} style={[styles.button,{width:width,height:height,marginBottom:12},type == "fill"?styles.btnfill:styles.btnoutline]}>
             <Text style={[styles.buttonText,type == "fill"?styles.btnfillText:styles.btnoutlineText]}>{label}</Text>
         </View>
     )
