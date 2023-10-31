@@ -63,6 +63,54 @@ const ProfileScreen = ()=>{
     )
   }
   //end: screen menu
+
+  //start: main states for section  
+  const [detial,setDetail] = useState({
+    one:true,
+    two:false,
+    three:false,
+    four:false
+  })
+  const miniMenuHandler = (statename:string,condition:boolean)=>{ 
+    // setDetail((preState:any)=>({
+    //   ...preState,
+    //   [statename]:condition
+    // }))
+    if(statename == 'one'){
+      return setDetail({
+        one:true,
+        two:false,
+        three:false,
+        four:false
+      })
+    }
+    if(statename == 'two'){
+      return setDetail({
+        one:false,
+        two:true,
+        three:false,
+        four:false
+      })
+    }
+    if(statename == 'three'){
+      return setDetail({
+        one:false,
+        two:false,
+        three:true,
+        four:false
+      })
+    }
+    if(statename == 'four'){
+      return setDetail({
+        one:false,
+        two:false,
+        three:false,
+        four:true
+      })
+    }
+  } 
+  //end: main states for section 
+
   const HEADER_HEIGHT = 90;
   // start: userimagonmenu
   const Userimagonmenu = ({animHeaderValue}:Userimagonmenu)=>{
@@ -110,22 +158,34 @@ const ProfileScreen = ()=>{
        </Animated.View>
        <Animated.View style={{width:'100%', height:headerHeight, flexDirection:'row', backgroundColor:'#fff', shadowColor: '#212121', shadowOffset: [0,1], shadowOpacity: 0.1, shadowRadius:1}}>  
        
-       
-          <View style={[styles.iconBox]}> 
-              <IconProfile name='profile' size={getFontSize(26)} color="#000"/>
-          </View>
 
-          <View style={[styles.iconBox]}>
-              <IconLoan name='currency-ils' size={getFontSize(26)} color="#000"/>
-          </View> 
+          <TouchableOpacity style={[styles.iconBox,{position:'relative'}]} onPress={()=>miniMenuHandler('one',true)}> 
+              <IconProfile name='profile' size={getFontSize(28)} color="#000"/>
+              {detial.one&&(
+                <View style={{width:'46%',height:3,backgroundColor:'#171717',position:'absolute',bottom:0,borderRadius:12}}></View>
+              )} 
+          </TouchableOpacity>
 
-          <View style={[styles.iconBox]}>
-              <IconFeatures name='trending-up' size={getFontSize(26)} color="#000"/>
-          </View>  
+          <TouchableOpacity style={[styles.iconBox,{position:'relative'}]}  onPress={()=>miniMenuHandler('two',true)}> 
+              <IconLoan name='currency-ils' size={getFontSize(28)} color="#000"/>
+              {detial.two&&(
+                <View style={{width:'46%',height:3,backgroundColor:'#171717',position:'absolute',bottom:0,borderRadius:12}}></View>
+              )} 
+          </TouchableOpacity> 
 
-          <View style={[styles.iconBox]}>
-              <IconFeatures name='settings' size={getFontSize(26)} color="#000"/>
-          </View>
+          <TouchableOpacity style={[styles.iconBox,{position:'relative'}]} onPress={()=>miniMenuHandler('three',true)}> 
+              <IconFeatures name='trending-up' size={getFontSize(28)} color="#000"/>
+              {detial.three&&(
+                <View style={{width:'46%',height:3,backgroundColor:'#171717',position:'absolute',bottom:0,borderRadius:12}}></View>
+              )} 
+          </TouchableOpacity>  
+
+          <TouchableOpacity style={[styles.iconBox,{position:'relative'}]} onPress={()=>miniMenuHandler('four',true)}> 
+              <IconFeatures name='settings' size={getFontSize(28)} color="#000"/>
+              {detial.four&&(
+                <View style={{width:'46%',height:3,backgroundColor:'#171717',position:'absolute',bottom:0,borderRadius:12}}></View>
+              )} 
+          </TouchableOpacity>
 
        </Animated.View>
       </Animated.View>
@@ -157,13 +217,42 @@ const ProfileScreen = ()=>{
                 [{ nativeEvent: { contentOffset: { y: scrollOffsetY}}}],
                 {useNativeDriver: false}
               )}
-              style={{paddingTop:(HEADER_HEIGHT*2)+40,backgroundColor:'#f0f0f0'}}
+              style={{paddingTop:(HEADER_HEIGHT*2)+40,paddingBottom:(HEADER_HEIGHT*2)+120,backgroundColor:'#f0f0f0'}}
             >         
-                  {DATA.map((book, index) => {
+                  {/* {DATA.map((book, index) => {
                     return (                
                         <Text style={styles.scrollText} key={book.id}>{book.title}</Text>                
                     )
-                  })}       
+                  })}        */}
+                  {detial.one&&( 
+                    <View style={{width:'100%',minHeight:500,backgroundColor:'red',padding:paddings.md,flexDirection:'column'}}>
+                        <View>
+                            
+                        </View>
+                    </View>
+                  )}
+                  {detial.two&&( 
+                    <View style={{width:'100%',minHeight:500,backgroundColor:'pink',padding:paddings.md,flexDirection:'column'}}>
+                      <View>
+                        
+                      </View>
+                    </View>
+                  )}
+                  {detial.three&&(
+                    <View style={{width:'100%',minHeight:500,backgroundColor:'orange',padding:paddings.md,flexDirection:'column'}}>
+                        <View>
+                          
+                        </View>
+                    </View> 
+                   )}
+                   {detial.four&&( 
+                    <View style={{width:'100%',minHeight:500,backgroundColor:'yellow',padding:paddings.md,flexDirection:'column'}}>
+                      <View>
+                        
+                      </View>
+                    </View>
+                   )}
+                  <View style={{width:'100%',height:300}}></View>
             </ScrollView>
         </View>
     </GestureHandlerRootView>  
