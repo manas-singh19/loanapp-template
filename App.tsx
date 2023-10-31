@@ -22,6 +22,7 @@ import ProfileScreen from './src/screens/profileScreen';
 import HomeScreen from './src/screens/homeScreen';
 import NotificationScreen from './src/screens/notification'; 
 import OfferScreen from './src/screens/currentOffersScreen';
+import LoanScreen from './src/screens/loan';
 
 // icon 
 import Icon from 'react-native-vector-icons/AntDesign';
@@ -226,7 +227,7 @@ const App = () => {
                 ),
               }}
             />
-            <Tab.Screen name="Profile" component={ProfileScreen} 
+            <Tab.Screen name="loan" component={LoanScreen} 
               options={{
                 headerShown: false,
                 tabBarIcon: ({focused}) => (
@@ -248,7 +249,7 @@ const App = () => {
                 ),
               }}
             />
-            <Tab.Screen name="mas" component={ProfileScreen} 
+            <Tab.Screen name="Profile" component={ProfileScreen} 
               options={{
                 tabBarIcon: ({focused}) => (
                   <View

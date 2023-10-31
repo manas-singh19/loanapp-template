@@ -246,6 +246,7 @@ const ProfileScreen = ()=>{
                 [{ nativeEvent: { contentOffset: { y: scrollOffsetY}}}],
                 {useNativeDriver: false}
               )}
+              scrollEnabled={true} showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false}
               style={{paddingTop:(HEADER_HEIGHT*2)+40,paddingBottom:(HEADER_HEIGHT*2)+120,backgroundColor:'#f0f0f0'}}
             >         
                   {/* {DATA.map((book, index) => {
@@ -298,15 +299,21 @@ const ProfileScreen = ()=>{
                         <View style={[styles.profileDetails,{backgroundColor:'#f0f0f0',padding:0}]}>
                           <Text style={[styles.headerText]}>Current Loan</Text>
                           <Text style={{ }}>No Current loan running, 
-                             <Text onPress={()=>miniMenuHandler('two',true)}>Browse Loan</Text>
+                             <Text onPress={()=>miniMenuHandler('two',true)} style={{color:'#9C34C2',fontWeight:'600'}}>Browse Loan</Text>
                           </Text>
                         </View>
                     </View> 
                    )}
                    {detial.four&&( 
-                    <View style={{width:'100%',minHeight:500,backgroundColor:'#f0f0f0',padding:paddings.md,flexDirection:'column'}}>
+                    <View style={{width:'100%',minHeight:300,backgroundColor:'#f0f0f0',padding:paddings.md,flexDirection:'column'}}>
                         <View style={[styles.profileDetails,{backgroundColor:'#f0f0f0',padding:0}]}>
-                          <Text style={[styles.headerText]}>Change Setting</Text>
+                          <Text style={[styles.headerText]}>Change Setting</Text> 
+                           
+                          
+                          <TouchableOpacity><Text style={[styles.settingText]}>Constat Us</Text></TouchableOpacity>
+                          <TouchableOpacity><Text style={[styles.settingText]}>Legal Notice</Text></TouchableOpacity>
+                          <TouchableOpacity><Text style={[styles.settingText]}>Terms & Conditions</Text></TouchableOpacity>
+                          <TouchableOpacity><Text style={[styles.settingText]}>Sing Out</Text></TouchableOpacity>
                           
                         </View>
                     </View> 
@@ -429,6 +436,14 @@ const styles = StyleSheet.create({
     borderColor:'#141414',
     borderRadius:6, 
     marginBottom:6
+  },
+  settingText:{
+    width:'100%',
+    backgroundColor:'#fff',
+    padding:paddings.xlg,
+    fontSize:fontSizes.md,
+    marginBottom:8,
+    borderRadius:6
   }
 });
   
