@@ -237,7 +237,7 @@ const ProfileScreen = ()=>{
             <Userimagonmenu animHeaderValue={scrollOffsetY}/>
             {/* <ScrollView style={styles.scrollView}   scrollEventThrottle={16} scrollEnabled={true} showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false}>
               <View style={[styles.userimageonmenu]}>
-
+                
               </View>
             </ScrollView> */} 
             <ScrollView
